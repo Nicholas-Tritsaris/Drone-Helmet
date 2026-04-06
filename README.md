@@ -1,4 +1,4 @@
-# Kink Drone v2.1.0
+# BlueBoopYT Drone Helmet v0.1 Alpha
 
 A wearable, fully offline "drone" interface with hardware-enforced safety.
 
