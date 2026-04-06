@@ -166,7 +166,7 @@ DroneHelmet.UWP/
 | 16 | TWR-01 Wrench | NIST-traceable torque reference wrench | 1 | BB-TWR01-V0.1A | ✅ In stock | Included with every kit; certified ±0.05 N·m. |
 | 17 | LiPo Battery | 3.7V, 500mAh cell, JST-PH 2.0mm connector | 1 | LP500-37-JSTPH | ✅ In stock | Cutoff voltage: 3.4V (enforced by firmware). |
 | 18 | `bb-strap-v0.1a.webp` | WebP-compressed strap tension map | 1 | — | ✅ Embedded | Used by SafetyGuardian for deformation detection. |
-| 19 | `bb-firmware-v0.1a.bin`| Signed ESP32 application binary (SHA256: c9b7e2f5...) | 1 | — | ✅ Hosted | Signed with BlueBoopYT Ed25519 key. |
+| 19 | `bb-drone-helmet-v0.1a.bin`| Signed ESP32 application binary (SHA256: c9b7e2f5...) | 1 | — | ✅ Hosted | Signed with BlueBoopYT Ed25519 key. |
 | 20 | Packaging Kit | Recycled kraft box, FSC-certified | 1 | — | ✅ Included | Contains all components and quick-start guide. |
 
 **Legal Footer**:

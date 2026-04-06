@@ -16,11 +16,13 @@ HX711_SCK_PIN = 32
 HX711_DOUT_PIN = 33
 I2C_SDA_PIN = 21
 I2C_SCL_PIN = 22
+TEMP_SENSOR_PIN = 4 # DS18B20
 
 # Global status
 status = {
     "battery_v": 0.0,
     "torque_nm": 0.0,
+    "temp_c": 25.0,
     "consent_given": False,
     "lock_state": "UNLOCKED",
     "locked": False,
@@ -144,7 +146,7 @@ def main_loop():
         elif status["lock_state"] == "EMERGENCY_RELEASE": state_code = 0x03
 
         ble.update_lock_state(state_code)
-        ble.update_telemetry(battery_v, 25.0, torque_nm) # Temp placeholder 25.0
+        ble.update_telemetry(battery_v, status["temp_c"], torque_nm)
 
         time.sleep(0.05) # Loop at ~20Hz for responsiveness
 
