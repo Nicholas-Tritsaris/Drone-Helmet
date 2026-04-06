@@ -1,21 +1,21 @@
-# Hardware Design v2.1.0
+# Hardware Design v0.1 Alpha
 
-This directory contains the mechanical and electrical design for the Kink Drone v2.1.0.
+This directory contains the mechanical and electrical design for the BlueBoopYT Drone Helmet v0.1 Alpha.
 
 ## 1. Mechanical (STLs)
 The shell is designed for 3D printing in PETG. The STLs are located in `hardware/stls/`.
-- `shell_base_v2.1.0.stl`: Main housing for ESP32, battery, and solenoid.
-- `oled_mount_v2.1.0.stl`: Press-fit frame for the 1.3" OLED.
-- `lock_icon_v2.1.0.stl`: Indicator for lock state status.
-- `label_backplate_v2.1.0.stl`: Mounting point for regulatory and safety labels.
+- `bb-shell-v0.1a.stl`: Main housing for ESP32, battery, and solenoid.
+- `bb-oled-mount-v0.1a.stl`: Press-fit frame for the 1.3" OLED.
+- `bb-lock-icon-v0.1a.stl`: Indicator for lock state status.
+- `bb-label-backplate-v0.1a.stl`: Mounting point for regulatory and safety labels.
 
 **Filament Choice**: Use PETG (Prusa PETG or equivalent) for its toughness and low-shrink properties.
 **Silicone/Foam**: All skin-contacting parts MUST be ISO 10993-5 certified medical-grade silicone. Use Dragon Skin 10 NV or equivalent for custom-molded parts.
 
 ## 2. Electrical (PCB)
 The electronics are based on an ESP32-WROOM-32. The KiCad project is located in `hardware/pcb/`.
-- `kink_drone_sch_v2.1.0.kicad_sch`: Schematic with safety isolation for the solenoid.
-- `kink_drone_pcb_v2.1.0.kicad_pcb`: 2-layer PCB layout with optimized thermal dissipation for the solenoid driver.
+- `bb-drone-helmet-sch-v0.1a.kicad_sch`: Schematic with safety isolation for the solenoid.
+- `bb-drone-helmet-pcb-v0.1a.kicad_pcb`: 2-layer PCB layout with optimized thermal dissipation for the solenoid driver.
 
 ### Pinout (ESP32) - Updated v2.1.1
 - **I2C SDA**: GPIO21 (OLED)

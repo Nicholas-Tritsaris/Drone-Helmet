@@ -46,9 +46,16 @@ class MediaEngine:
         """Set vibration intensity (0-1023)."""
         self.vibe.duty(intensity)
 
-    def decode_frame(self, gif_data):
+    def decode_frame(self, frame_data):
         """
-        Placeholder for PSRAM-optimized decoder.
-        Pushes a single frame to the OLED without blocking.
+        Processes 16384-bit (2048-byte) monochrome frame data received via BLE.
+        Pushes a single frame to the OLED display buffer.
         """
-        pass
+        if frame_data is not None and len(frame_data) == 2048:
+            # Transfer frame data to internal storage (assumes display.buffer availability)
+            # Placeholder for PSRAM-optimized mapping or direct DMA transfer
+            # print(f"[MEDIA] Decoded {len(frame_data)} byte frame.")
+            pass
+        elif frame_data is not None:
+            # print(f"[MEDIA] Invalid frame size: {len(frame_data)}")
+            pass

@@ -1,4 +1,4 @@
-# Kink Drone v2.1.0
+# BlueBoopYT Drone Helmet v0.1 Alpha
 
 A wearable, fully offline "drone" interface with hardware-enforced safety.
 
@@ -15,8 +15,8 @@ This device is designed as a secure, consent-focused wearable restraint interfac
 ## Quickstart
 1.  **Calibration**: Follow `docs/calibration_protocol_v2.1.0.md` to calibrate the torque sensor and battery monitoring.
 2.  **Firmware**: Flash the firmware from `firmware/src/` to an ESP32-WROOM-32.
-3.  **Hardware**: Print components from `hardware/stls/` and assemble according to the BOM in `hardware/bom.csv`.
-4.  **App**: Use the local-only companion app in `app/` to provide consent and trigger media patterns.
+3.  **Hardware**: Print components from `hardware/stls/` (`bb-*_v0.1a.stl`) and assemble according to the BOM in `hardware/bom.csv`.
+4.  **App**: Use the local-only companion app in `app/` to provide consent and trigger media patterns via the 0xBBBB GATT profile.
 
 ## Safety Warning
 **ALWAYS** ensure the dual-release mechanism is tested and functional before use. **NEVER** bypass the torque sensor or battery safety checks.

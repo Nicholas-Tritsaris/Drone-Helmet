@@ -16,11 +16,13 @@ HX711_SCK_PIN = 32
 HX711_DOUT_PIN = 33
 I2C_SDA_PIN = 21
 I2C_SCL_PIN = 22
+TEMP_SENSOR_PIN = 4 # DS18B20
 
 # Global status
 status = {
     "battery_v": 0.0,
     "torque_nm": 0.0,
+    "temp_c": 25.0,
     "consent_given": False,
     "lock_state": "UNLOCKED",
     "locked": False,
@@ -39,7 +41,7 @@ def read_battery_voltage():
     return voltage
 
 def setup():
-    print("Kink Drone v2.1.0 Initializing...")
+    print("BlueBoopYT Drone Helmet v0.1a Initializing...")
     # Initialize Watchdog Timer (WDT) - 5 second timeout
     wdt = machine.WDT(timeout=5000)
 
@@ -84,19 +86,23 @@ def main_loop():
         torque_nm = hx.get_units(3) # Fewer counts for faster loop
         status["torque_nm"] = torque_nm
 
-        # 5. BLE commands
-        cmd = ble.read()
-        if "CONSENT_ACK" in cmd:
-            status["consent_given"] = True
-            status["last_packet_time"] = time.time()
-        elif "STOP" in cmd:
-            status["consent_given"] = False
+        # 5. BLE commands (0xBBBB GATT Implementation)
+        status["consent_given"] = ble.consent_given
+        if ble.emergency_cmd:
+            ble.emergency_cmd = False
             lock.release()
             media.stop_tone()
+            media.vibrate(512) # Haptic pulse for emergency receipt
+            time.sleep(3.0)
             media.vibrate(0)
+            status["lock_state"] = "EMERGENCY_RELEASE"
+
+        if ble.new_frame is not None:
+            media.decode_frame(ble.new_frame)
+            ble.new_frame = None
 
         # 6. State Update & Solenoid Control
-        lock_ready = (battery_v >= 3.4 and torque_nm >= 2.2 and status["consent_given"])
+        lock_ready = (battery_v >= 3.4 and torque_nm >= ble.lock_threshold and status["consent_given"])
 
         # Check safety overrides first
         if buckle_unlatched or mouth_removed or battery_v < 3.4:
@@ -117,8 +123,8 @@ def main_loop():
             status["lock_state"] = "UNLOCKED"
             status["locked"] = False
 
-        # 7. Watchdog/Timeout check (5s timeout for control packets)
-        if time.time() - status["last_packet_time"] > 5.0 and status["locked"]:
+        # 7. Watchdog/Timeout check (BLE connection required for sustained lock)
+        if not ble.is_connected() and status["locked"]:
             lock.release()
             media.stop_tone()
             status["lock_state"] = "TIMEOUT_RELEASE"
@@ -133,12 +139,14 @@ def main_loop():
             oled.text("WAIT CONSENT", 0, 30)
         oled.show()
 
-        # 9. Media control (if locked)
-        if status["locked"]:
-            media.decode_frame(None) # Placeholder for visual loop
-
         # 10. Send Telemetry to BLE app
-        ble.write(f"ST: {status['lock_state']} | B: {battery_v:.2f}V | T: {torque_nm:.2f}Nm\n")
+        # uint8: 0x00=unlocked, 0x01=locked, 0x02=engaged, 0x03=emergency
+        state_code = 0x00
+        if status["lock_state"] == "LOCKED": state_code = 0x01
+        elif status["lock_state"] == "EMERGENCY_RELEASE": state_code = 0x03
+
+        ble.update_lock_state(state_code)
+        ble.update_telemetry(battery_v, status["temp_c"], torque_nm)
 
         time.sleep(0.05) # Loop at ~20Hz for responsiveness
 

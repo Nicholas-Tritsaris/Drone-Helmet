@@ -1,3 +1,5 @@
+# BlueBoopYT Drone Helmet v0.1 Alpha Launch Package
+
 ### 🏷️ 1. BRANDING HEADER
 
 **Official Name**
@@ -24,6 +26,7 @@
 All components are **verified, tested, and publicly available** as of tag [`v0.1a`](https://github.com/Nicholas-Tritsaris/Drone-Helmet/releases/tag/v0.1a) and documented at [`blueboop.is-a.dev/Drone-Helmet/`](https://blueboop.is-a.dev/Drone-Helmet/).
 
 #### ▪ HARDWARE (3D-PRINTED + ASSEMBLED)
+
 - ✅ **Shell**: `bb-shell-v0.1a.stl` — PETG-optimized, dual-wall (1.6mm outer / 0.8mm inner), ventilation slots aligned with thermal sensor placement, mouth-tube cutout with silicone gasket recess.
 - ✅ **OLED Mount**: `bb-oled-mount-v0.1a.stl` — press-fit SHARP LS013B4DN02 frame with 0.3mm light-seal gap (prevents bleed into eye cavity).
 - ✅ **Torque-Sensing Buckle System**: Mechanical dual-release — strap buckle *and* mouth-cap torque sensor (≥2.2 N·m required) must both disengage for removal. Confirmed in `/hardware/buckle/mechanical_validation_v0.1a.pdf`.
@@ -32,6 +35,7 @@ All components are **verified, tested, and publicly available** as of tag [`v0.1
 - ✅ **Lock Actuator**: 5V/0.3A solenoid (JF-0530B), driven via IRLZ44N MOSFET with flyback diode — full stroke verified at 1.8 mm (no binding).
 
 #### ▪ FIRMWARE
+
 - ✅ **Binary**: `bb-drone-helmet-v0.1a.bin` — SHA256: `c9b7e2f5d1a8c40e6b3f9a7d2e1c8b5f0a9d3e7c6b1f8a4d2e9c7b0a5f3d8e1c`
   → Flashable via `esptool.py` (command included below).
 
@@ -52,9 +56,11 @@ All components are **verified, tested, and publicly available** as of tag [`v0.1
 • **0xBBBB3336**: Torque Reading — float32 (N·m), raw differential ADC value, zeroed at boot
 
 ✅ **Flashing Command (copy-paste safe)**:
+
 ```bash
 esptool --chip esp32 --port /dev/ttyUSB0 --baud 921600 write_flash -z 0x1000 bb-drone-helmet-v0.1a.bin
 ```
+
 ✅ **Verified SHA256**: `c9b7e2f5d1a8c40e6b3f9a7d2e1c8b5f0a9d3e7c6b1f8a4d2e9c7b0a5f3d8e1c`
 ✅ **Boot confirmation**: OLED displays `BB v0.1a • SAFE • BLE ON` within 2.1 sec
 
@@ -63,6 +69,7 @@ esptool --chip esp32 --port /dev/ttyUSB0 --baud 921600 write_flash -z 0x1000 bb-
 ✅ **Android (Kotlin / Jetpack Compose)**
 - **APK**: `bb-drone-helmet-android-v0.1a.apk`
 - **Source structure** (verified in `/app/android/`):
+
 ```text
 app/src/main/
 ├── kotlin/com/blueboopyt/dronehelmet/
@@ -76,11 +83,13 @@ app/src/main/
 │   └── drawable/logo_bb_circle.xml  // Vector logo — same waveform glyph as spec
 └── build.gradle.kts                 // Targets API 34 (UpsideDownCake), minSdk 26
 ```
+
 ✅ **Confirmed behavior**: “Hold ‘EMERGENCY’ button for 3.0s → sends 0xDEAD → solenoid engages → haptic motor pulses 3× → tone plays → OLED flashes red ×3 → app confirms ‘LOCK RELEASED’.”
 
 ✅ **iOS (Swift / SwiftUI)**
 - **IPA**: `bb-drone-helmet-ios-v0.1a.ipa`
 - **Source structure** (verified in `/app/ios/DroneHelmet/`):
+
 ```text
 DroneHelmet/
 ├── DroneHelmetApp.swift             // Core app lifecycle + background BLE resume
@@ -97,6 +106,7 @@ DroneHelmet/
 ✅ **Windows Phone 10 (C# / UWP)**
 - **APPX**: `bb-drone-helmet-wp10-v0.1a.appx`
 - **Source structure** (verified in `/app/wp10/DroneHelmet.UWP/`):
+
 ```text
 DroneHelmet.UWP/
 ├── MainPage.xaml.cs                 // BLE pairing flow + device list
@@ -156,7 +166,7 @@ DroneHelmet.UWP/
 | 16 | TWR-01 Wrench | NIST-traceable torque reference wrench | 1 | BB-TWR01-V0.1A | ✅ In stock | Included with every kit; certified ±0.05 N·m. |
 | 17 | LiPo Battery | 3.7V, 500mAh cell, JST-PH 2.0mm connector | 1 | LP500-37-JSTPH | ✅ In stock | Cutoff voltage: 3.4V (enforced by firmware). |
 | 18 | `bb-strap-v0.1a.webp` | WebP-compressed strap tension map | 1 | — | ✅ Embedded | Used by SafetyGuardian for deformation detection. |
-| 19 | `bb-firmware-v0.1a.bin`| Signed ESP32 application binary (SHA256: c9b7e2f5...) | 1 | — | ✅ Hosted | Signed with BlueBoopYT Ed25519 key. |
+| 19 | `bb-drone-helmet-v0.1a.bin`| Signed ESP32 application binary (SHA256: c9b7e2f5...) | 1 | — | ✅ Hosted | Signed with BlueBoopYT Ed25519 key. |
 | 20 | Packaging Kit | Recycled kraft box, FSC-certified | 1 | — | ✅ Included | Contains all components and quick-start guide. |
 
 **Legal Footer**:
